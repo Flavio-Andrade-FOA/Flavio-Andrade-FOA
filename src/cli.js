@@ -6,12 +6,12 @@ import chalk from 'chalk';
 const path = process.argv;
 console.log(path[2], 'helooooo');
 
-function printLinks(validate, links, arquivo = '') {
+async function printLinks(validate, links, arquivo = '') {
   if(validate){
     console.log(
       chalk.yellow('Lista de Links validada'),
       chalk.black.bgBlue(arquivo),
-      httpValidate(links)
+      await httpValidate(links)
     );
   }else {
     console.log(
