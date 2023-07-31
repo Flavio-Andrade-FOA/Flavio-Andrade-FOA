@@ -1,14 +1,31 @@
 import {getFile4} from './main.js';
+import { httpValidate } from './http.js';
 import fs from 'fs';
+import chalk from 'chalk';
 
 const path = process.argv;
 console.log(path[2], 'helooooo');
 
+function printLinks(validate, links, arquivo = '') {
+  if(validate){
+    console.log(
+      chalk.yellow('Lista de Links validada'),
+      chalk.black.bgBlue(arquivo),
+      httpValidate(links)
+    );
+  }else {
+    console.log(
+      chalk.yellow('Lista de Links sem validar'),
+      chalk.black.bgBlue(arquivo),
+      links
+    );
+  }
+}
 
 
 async function processText(args) {
   const path = args[2];
-  const params = args[3];
+  const params = args[3] === '--validate';
 
   console.log(path, 'helooooo caminho');
   console.log(params, 'helooooo params');
@@ -25,14 +42,14 @@ async function processText(args) {
 
   if(fs.lstatSync(path).isFile()) {
     const result = await getFile4(path);
-    console.log(result);
+    printLinks(params,result);
 
   }else if (fs.statSync(path).isDirectory()) {
     const files = await fs.promises.readdir(path);
-    console.log(files);
+
     files.forEach(async (file) => {
       const post = await getFile4(`${path}/${file}`);
-      console.log(file, post);
+      printLinks(params, post, file);
     });
   }
 

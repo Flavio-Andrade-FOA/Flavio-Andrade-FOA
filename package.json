@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cli": "node ./src/cli.js",
-    "cli:validate": "node ./src/cli.js ./data --valida"
+    "cli:validate": "node ./src/cli.js ./data --validate"
   },
   "keywords": [],
   "author": "",
